@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
     server: {
       host: true,
       port: 8080,
-      allowedHosts: true
+      allowedHosts: ["ideathon.ecellnita.in"]
     },
   };
 });
