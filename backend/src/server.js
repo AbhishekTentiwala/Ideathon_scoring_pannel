@@ -15,6 +15,7 @@ await connectDB();
 const buildAllowedOrigins = () => {
   const configuredOrigins = [
     process.env.CLIENT_URL,
+    "http://localhost:8080",
     "http://localhost:5500",
     "http://localhost:5173",
   ].filter(Boolean);
@@ -67,5 +68,5 @@ app.use((err, _req, res, _next) => {
 
 registerSockets(io);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8081;
 server.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));

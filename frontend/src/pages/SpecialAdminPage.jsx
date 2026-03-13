@@ -233,19 +233,19 @@ export default function SpecialAdminPage() {
       </div>
 
       <header className="sticky top-0 z-20 border-b border-white/10 bg-slate-950/70 backdrop-blur">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
             <p className="text-xs uppercase tracking-[0.22em] text-cyan-300/90 font-semibold">Startup Control Room</p>
             <h1 className="font-display text-xl sm:text-2xl">Special Admin</h1>
           </div>
-          <div className="flex items-center gap-2">
-            <Link to="/special-admin/leaderboard" className="btn-ghost bg-white/5 border-white/15 text-white hover:bg-white/10">
+          <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+            <Link to="/special-admin/leaderboard" className="btn-ghost bg-white/5 border-white/15 text-white hover:bg-white/10 text-xs sm:text-sm px-3 py-2">
               Leaderboard
             </Link>
-            <button onClick={loadStartups} className="btn-ghost bg-white/5 border-white/15 text-white hover:bg-white/10">
+            <button onClick={loadStartups} className="btn-ghost bg-white/5 border-white/15 text-white hover:bg-white/10 text-xs sm:text-sm px-3 py-2">
               <FiRefreshCw /> Refresh
             </button>
-            <button onClick={onLock} className="btn-ghost bg-white/5 border-white/15 text-white hover:bg-white/10">
+            <button onClick={onLock} className="btn-ghost bg-white/5 border-white/15 text-white hover:bg-white/10 text-xs sm:text-sm px-3 py-2">
               <FiLock /> Lock
             </button>
           </div>
@@ -266,7 +266,7 @@ export default function SpecialAdminPage() {
             </div>
           </div>
 
-          <div className="max-h-[65vh] overflow-y-auto">
+          <div className="max-h-[38vh] sm:max-h-[65vh] overflow-y-auto">
             {loading ? (
               <div className="p-5 text-sm text-white/70">Loading startups...</div>
             ) : filtered.length === 0 ? (
@@ -383,15 +383,15 @@ export default function SpecialAdminPage() {
               </Field>
             </div>
 
-            <div className="md:col-span-2 flex items-center gap-3 pt-1">
-              <button className="btn-primary" disabled={saving}>
+            <div className="md:col-span-2 flex items-center gap-3 pt-1 flex-wrap">
+              <button className="btn-primary w-full sm:w-auto" disabled={saving}>
                 {saving ? <FiRefreshCw className="animate-spin" /> : selectedId ? <FiSave /> : <FiPlus />}
                 {selectedId ? "Save Changes" : "Create Startup"}
               </button>
               <button
                 type="button"
                 onClick={resetForm}
-                className="btn-ghost bg-white/5 border-white/20 text-white hover:bg-white/10"
+                className="btn-ghost bg-white/5 border-white/20 text-white hover:bg-white/10 w-full sm:w-auto"
               >
                 <FiEdit3 /> New Form
               </button>

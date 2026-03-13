@@ -111,18 +111,18 @@ export default function SpecialAdminLeaderboardPage() {
   return (
     <div className="min-h-screen bg-[linear-gradient(135deg,#0f172a_0%,#1e293b_45%,#0b1120_100%)] text-white">
       <header className="sticky top-0 z-20 border-b border-white/10 bg-slate-950/75 backdrop-blur">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-cyan-300/90 font-semibold">Superadmin</p>
             <h1 className="font-display text-xl sm:text-2xl">Non-Zero Evaluation Leaderboard</h1>
           </div>
-          <div className="flex items-center gap-2">
-            <Link to="/special-admin" className="btn-ghost bg-white/5 border-white/15 text-white hover:bg-white/10">
+          <div className="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+            <Link to="/special-admin" className="btn-ghost bg-white/5 border-white/15 text-white hover:bg-white/10 text-xs sm:text-sm px-3 py-2">
               <FiArrowLeft /> Manage Startups
             </Link>
             <button
               onClick={() => fetchLeaderboard(adminPassword)}
-              className="btn-ghost bg-white/5 border-white/15 text-white hover:bg-white/10"
+              className="btn-ghost bg-white/5 border-white/15 text-white hover:bg-white/10 text-xs sm:text-sm px-3 py-2"
             >
               <FiRefreshCw /> Refresh
             </button>
@@ -136,31 +136,55 @@ export default function SpecialAdminLeaderboardPage() {
         </div>
 
         <div className="rounded-3xl border border-white/15 bg-white/[0.06] backdrop-blur-xl overflow-hidden">
-          <div className="grid grid-cols-[80px,1.3fr,1fr,140px,140px] gap-3 px-4 py-3 text-[11px] uppercase tracking-wider text-white/50 border-b border-white/10">
-            <span>Standing</span>
-            <span>Team</span>
-            <span>Project</span>
-            <span>Avg Score</span>
-            <span>Evals</span>
-          </div>
-
           {loading ? (
             <div className="p-6 text-white/70 text-sm">Loading leaderboard...</div>
           ) : standings.length === 0 ? (
             <div className="p-6 text-white/70 text-sm">No evaluated startups found yet.</div>
           ) : (
-            standings.map((row) => (
-              <div
-                key={row.id}
-                className="grid grid-cols-[80px,1.3fr,1fr,140px,140px] gap-3 px-4 py-4 border-b border-white/10 last:border-b-0 hover:bg-white/[0.08]"
-              >
-                <span className="font-display text-lg text-amber-300">#{row.standing}</span>
-                <span className="font-semibold truncate" title={row.teamName}>{row.teamName}</span>
-                <span className="text-white/75 truncate" title={row.projectTitle || "No project title"}>{row.projectTitle || "No project title"}</span>
-                <span className="font-semibold text-cyan-300">{Number(row.averageScore || 0).toFixed(2)} / {maxScore}</span>
-                <span className="text-white/80">{row.totalEvaluations}</span>
+            <>
+              <div className="hidden md:grid grid-cols-[80px,1.3fr,1fr,140px,140px] gap-3 px-4 py-3 text-[11px] uppercase tracking-wider text-white/50 border-b border-white/10">
+                <span>Standing</span>
+                <span>Team</span>
+                <span>Project</span>
+                <span>Avg Score</span>
+                <span>Evals</span>
               </div>
-            ))
+
+              <div className="hidden md:block">
+                {standings.map((row) => (
+                  <div
+                    key={row.id}
+                    className="grid grid-cols-[80px,1.3fr,1fr,140px,140px] gap-3 px-4 py-4 border-b border-white/10 last:border-b-0 hover:bg-white/[0.08]"
+                  >
+                    <span className="font-display text-lg text-amber-300">#{row.standing}</span>
+                    <span className="font-semibold truncate" title={row.teamName}>{row.teamName}</span>
+                    <span className="text-white/75 truncate" title={row.projectTitle || "No project title"}>{row.projectTitle || "No project title"}</span>
+                    <span className="font-semibold text-cyan-300">{Number(row.averageScore || 0).toFixed(2)} / {maxScore}</span>
+                    <span className="text-white/80">{row.totalEvaluations}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="md:hidden divide-y divide-white/10">
+                {standings.map((row) => (
+                  <div key={row.id} className="px-4 py-4 hover:bg-white/[0.08]">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="font-display text-lg text-amber-300">#{row.standing}</p>
+                        <p className="font-semibold truncate" title={row.teamName}>{row.teamName}</p>
+                        <p className="text-xs text-white/70 truncate" title={row.projectTitle || "No project title"}>
+                          {row.projectTitle || "No project title"}
+                        </p>
+                      </div>
+                      <div className="text-right flex-shrink-0">
+                        <p className="text-cyan-300 font-semibold text-sm">{Number(row.averageScore || 0).toFixed(2)} / {maxScore}</p>
+                        <p className="text-xs text-white/70">{row.totalEvaluations} evals</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
         </div>
       </main>
