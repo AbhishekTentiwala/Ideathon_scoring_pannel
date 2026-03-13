@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
     server: {
       host: true,
       port: 5500,
-      allowedHosts:["judge.startupkumbh.ecellnita.in"]
+      allowedHosts: true
     },
   };
 });

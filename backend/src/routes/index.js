@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { login, getMe } from "../controllers/authController.js";
 import { requireJudge } from "../middleware/auth.js";
+import { requireSpecialAdmin } from "../middleware/specialAdmin.js";
 
 const authRouter = Router();
 authRouter.post("/login", login);
@@ -9,7 +10,7 @@ export const authRoutes = authRouter;
 
 import {
   submitEvaluation, getMyEvaluation, getMyProgress,
-  getLeaderboard, getFullResults,
+  getLeaderboard, getFullResults, getNonZeroLeaderboard,
 } from "../controllers/evaluationController.js";
 
 const evalRouter = Router();
@@ -18,12 +19,14 @@ evalRouter.get("/my/:startupId", requireJudge, getMyEvaluation);
 evalRouter.get("/progress", requireJudge, getMyProgress);
 evalRouter.get("/leaderboard", getLeaderboard);
 evalRouter.get("/admin/full", getFullResults);
+evalRouter.get("/admin/non-zero-leaderboard", requireSpecialAdmin, getNonZeroLeaderboard);
 export const evaluationRoutes = evalRouter;
 
-import { getStartups, createStartup, deleteStartup } from "../controllers/startupController.js";
+import { getStartups, createStartup, updateStartup, deleteStartup } from "../controllers/startupController.js";
 
 const startupRouter = Router();
 startupRouter.get("/", getStartups);
-startupRouter.post("/", createStartup);
-startupRouter.delete("/:id", deleteStartup);
+startupRouter.post("/", requireSpecialAdmin, createStartup);
+startupRouter.put("/:id", requireSpecialAdmin, updateStartup);
+startupRouter.delete("/:id", requireSpecialAdmin, deleteStartup);
 export const startupRoutes = startupRouter;

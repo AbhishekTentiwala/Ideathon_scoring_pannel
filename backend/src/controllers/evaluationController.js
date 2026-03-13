@@ -97,6 +97,15 @@ export const getLeaderboard = async (req, res, next) => {
   }
 };
 
+export const getNonZeroLeaderboard = async (req, res, next) => {
+  try {
+    const leaderboard = await buildLeaderboard({ nonZeroOnly: true });
+    res.json({ success: true, leaderboard, maxScore: MAX_TOTAL_SCORE });
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 export const getFullResults = async (req, res, next) => {
   try {
@@ -134,12 +143,16 @@ export const getFullResults = async (req, res, next) => {
 };
 
 
-async function buildLeaderboard() {
+async function buildLeaderboard({ nonZeroOnly = false } = {}) {
   const startups = await Startup.find()
     .sort({ averageScore: -1, pitchOrder: 1 })
     .lean();
 
-  return startups.map((s, i) => ({
+  const filtered = nonZeroOnly
+    ? startups.filter((s) => (s.totalEvaluations || 0) > 0)
+    : startups;
+
+  return filtered.map((s, i) => ({
     rank: i + 1,
     id: s._id,
     teamName: s.teamName,

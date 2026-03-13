@@ -13,11 +13,12 @@ await Startup.deleteMany({});
 await Evaluation.deleteMany({});
 
 const judgeData = [
-  { name: "Dr. Anil Mehta", email: "judge1@khumb.in", passwordHash: "judge@123", designation: "Venture Capitalist" },
-  { name: "Prof. Sunita Rao", email: "judge2@khumb.in", passwordHash: "judge@123", designation: "Academic Mentor" },
-  { name: "Mr. Vikram Bose", email: "judge3@khumb.in", passwordHash: "judge@123", designation: "Serial Entrepreneur" },
-  { name: "Ms. Priya Nair", email: "judge4@khumb.in", passwordHash: "judge@123", designation: "Angel Investor" },
-  { name: "Dr. Rajan Kumar", email: "judge5@khumb.in", passwordHash: "judge@123", designation: "Industry Expert" },
+  { name: "Mr. Padvnavayam", email: "judge1@khumb.in", passwordHash: "judge@123", designation: "Judge-Ideathon" },
+  { name: "Mr. Gautam", email: "judge2@khumb.in", passwordHash: "judge@123", designation: "Judge-Ideathon" },
+  { name: "Mr. Jaykumar", email: "judge3@khumb.in", passwordHash: "judge@123", designation: "Judge-Ideathon" },
+  { name: "Riten co founder", email: "judge4@khumb.in", passwordHash: "judge@123", designation: "Judge-Ideathon" },
+  { name: "Dr. Anirban Dutta", email: "judge5@khumb.in", passwordHash: "judge@123", designation: "Judge-Ideathon" },
+  { name: "Kathamirta manik", email: "judge6@khumb.in", passwordHash: "judge@123", designation: "Judge-Ideathon" },
 ];
 
 const judges = [];

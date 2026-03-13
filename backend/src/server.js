@@ -13,19 +13,26 @@ import { authRoutes, evaluationRoutes, startupRoutes } from "./routes/index.js";
 await connectDB();
 
 const buildAllowedOrigins = () => {
-  const primaryOrigin = process.env.CLIENT_URL || "http://localhost:5500";
-  const allowedOrigins = new Set([primaryOrigin]);
+  const configuredOrigins = [
+    process.env.CLIENT_URL,
+    "http://localhost:5500",
+    "http://localhost:5173",
+  ].filter(Boolean);
 
-  try {
-    const url = new URL(primaryOrigin);
-    if (url.hostname === "localhost") {
-      allowedOrigins.add(`${url.protocol}//127.0.0.1${url.port ? `:${url.port}` : ""}`);
-    } else if (url.hostname === "127.0.0.1") {
-      allowedOrigins.add(`${url.protocol}//localhost${url.port ? `:${url.port}` : ""}`);
+  const allowedOrigins = new Set(configuredOrigins);
+
+  configuredOrigins.forEach((origin) => {
+    try {
+      const url = new URL(origin);
+      if (url.hostname === "localhost") {
+        allowedOrigins.add(`${url.protocol}//127.0.0.1${url.port ? `:${url.port}` : ""}`);
+      } else if (url.hostname === "127.0.0.1") {
+        allowedOrigins.add(`${url.protocol}//localhost${url.port ? `:${url.port}` : ""}`);
+      }
+    } catch {
+      // Skip malformed entries and keep the valid ones.
     }
-  } catch {
-    // Fall back to the explicit origin only if CLIENT_URL is not a valid URL.
-  }
+  });
 
   return [...allowedOrigins];
 };

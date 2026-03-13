@@ -4,6 +4,8 @@ import { AuthProvider, useAuth } from "./lib/AuthContext.jsx";
 import LoginPage from "../src/pages/LoginPage.jsx";
 import JudgePage from "../src/pages/JudgePage.jsx";
 import AdminPage from "../src/pages/AdminPage.jsx";
+import SpecialAdminPage from "../src/pages/SpecialAdminPage.jsx";
+import SpecialAdminLeaderboardPage from "../src/pages/SpecialAdminLeaderboardPage.jsx";
 
 function ProtectedJudge({ children }) {
   const { judge, loading } = useAuth();
@@ -38,6 +40,8 @@ function AppRoutes() {
         }
       />
       <Route path="/admin" element={<AdminPage />} />
+      <Route path="/special-admin" element={<SpecialAdminPage />} />
+        <Route path="/special-admin/leaderboard" element={<SpecialAdminLeaderboardPage />} />
       <Route path="*" element={<Navigate to={judge ? "/judge" : "/login"} replace />} />
     </Routes>
   );
